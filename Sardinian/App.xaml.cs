@@ -1,5 +1,8 @@
-﻿using Sardinian.Common;
-
+﻿using Cirrious.CrossCore;
+using Cirrious.MvvmCross.ViewModels;
+using Sardinian.Common;
+using Sardinian.UI.WindowsStore;
+using Sardinian.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -84,13 +87,19 @@ namespace Sardinian
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
-            if (rootFrame.Content == null)
+            var setup = new Setup(rootFrame);
+            setup.Initialize();
+
+            var start = Mvx.Resolve<IMvxAppStart>();
+            start.Start();
+            //Removed as per MvvmCross instructions
+            /*if (rootFrame.Content == null)
             {
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(ItemsPage), e.Arguments);
-            }
+                rootFrame.Navigate(typeof(SplashPage), e.Arguments);
+            }*/
             // Ensure the current window is active
             Window.Current.Activate();
         }

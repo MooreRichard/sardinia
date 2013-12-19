@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sardinian", "Sardinian.csproj", "{42432438-ED9E-412B-9395-1A4E36FB7A9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sardinian.UI.WindowsStore", "Sardinian.UI.WindowsStore.csproj", "{42432438-ED9E-412B-9395-1A4E36FB7A9E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sardinian.Core", "..\Sardinian.Core\Sardinian.Core.csproj", "{08AE9484-0B85-4FF7-B91B-ADD882026205}"
 EndProject
