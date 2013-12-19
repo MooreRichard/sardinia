@@ -3,15 +3,15 @@ using Sardinian.Core.ViewModel;
 
 namespace Sardinian.UI.WindowsStore.Views
 {
-    public sealed partial class SplashView : MvxStorePage
+    public sealed partial class HomeView : MvxStorePage
     {
-        public new SplashViewModel ViewModel
+        public new HomeViewModel ViewModel
         {
-            get { return (SplashViewModel)base.ViewModel; }
+            get { return (HomeViewModel)base.ViewModel; }
             set { base.ViewModel = value; }
         }
 
-        public SplashView()
+        public HomeView()
         {
             this.InitializeComponent();
         }
