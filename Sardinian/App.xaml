@@ -1,0 +1,13 @@
+﻿<Application
+    x:Class="Sardinian.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sardinian"
+    xmlns:localData="using:Sardinian.Data">
+
+    <Application.Resources>
+
+        <!-- Application-specific resources -->
+        <x:String x:Key="AppName">Sardinian</x:String>
+    </Application.Resources>
+</Application>
