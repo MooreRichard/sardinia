@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sardinian.UI.WindowsStore",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sardinian.Core", "..\Sardinian.Core\Sardinian.Core.csproj", "{08AE9484-0B85-4FF7-B91B-ADD882026205}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sardinia.Core.Test", "..\Sardinia.Core.Test\Sardinia.Core.Test.csproj", "{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,16 @@ Global
 		{08AE9484-0B85-4FF7-B91B-ADD882026205}.Release|ARM.ActiveCfg = Release|Any CPU
 		{08AE9484-0B85-4FF7-B91B-ADD882026205}.Release|x64.ActiveCfg = Release|Any CPU
 		{08AE9484-0B85-4FF7-B91B-ADD882026205}.Release|x86.ActiveCfg = Release|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Release|ARM.ActiveCfg = Release|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Release|x64.ActiveCfg = Release|Any CPU
+		{6BD93EC6-2EF5-44A8-BEBB-DB13A5DC53F8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
