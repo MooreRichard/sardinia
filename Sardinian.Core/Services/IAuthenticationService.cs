@@ -8,7 +8,7 @@ namespace Sardinian.Core.Services
 {
     public interface IAuthenticationService
     {
-        void RequestToken();
+        void RequestToken(string serviceUrl);
         void SaveToken();
         void RefreshToken();
         void DeleteToken();

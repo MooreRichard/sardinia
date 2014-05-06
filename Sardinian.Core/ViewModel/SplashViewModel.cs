@@ -1,4 +1,5 @@
 ﻿using Cirrious.MvvmCross.ViewModels;
+using Sardinian.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,18 @@ namespace Sardinian.Core.ViewModel
     public class SplashViewModel : MvxViewModel
     {
         #region Services
-        
+        IAuthenticationService _authenticationService;
         #endregion
 
         #region Commands
         private MvxCommand authenticationCommand;
-
         public MvxCommand AuthenticationCommand
         {
-            get { return new MvxCommand(ExecuteAuthenticationCommand); }
-        }
+            get { return new MvxCommand(delegate { 
+            
+                
 
-        private void ExecuteAuthenticationCommand()
-        {
+            }); }
         }
         
         #endregion
