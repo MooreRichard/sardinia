@@ -36,6 +36,11 @@
     <Compile Include="DTO\CustomerCart.cs" />
     <Compile Include="DTO\CustomerAddress.cs" />
     <Compile Include="DTO\CustomerCheckout.cs" />
+    <Compile Include="DTO\CustomerOrders.cs" />
+    <Compile Include="DTO\CustomerPaymentMethods.cs" />
+    <Compile Include="DTO\MerchantHours.cs" />
+    <Compile Include="DTO\MerchantInfo.cs" />
+    <Compile Include="DTO\MerchantMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
