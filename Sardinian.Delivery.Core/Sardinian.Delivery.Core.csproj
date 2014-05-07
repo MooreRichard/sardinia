@@ -42,6 +42,8 @@
     <Compile Include="DTO\MerchantInfo.cs" />
     <Compile Include="DTO\MerchantMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DeliveryDataService.cs" />
+    <Compile Include="Services\IDeliveryDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
