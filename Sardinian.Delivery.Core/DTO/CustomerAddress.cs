@@ -51,8 +51,8 @@ namespace Sardinian.Delivery.Core.DTO
         [JsonProperty("state")]
         public string State { get; set; }
 
-        [JsonProperty("zip_code")]
-        public string ZipCode { get; set; }
+        [JsonProperty("zip")]
+        public string Zipcode { get; set; }
 
         [JsonProperty("longitude")]
         public string Longitude { get; set; }
@@ -68,6 +68,12 @@ namespace Sardinian.Delivery.Core.DTO
 
         [JsonProperty("cross_streets")]
         public string CrossStreets { get; set; }
+
+        [JsonProperty("landmark")]
+        public string Landmark { get; set; }
+
+        [JsonProperty("distance")]
+        public string Distance { get; set; }
 
         [JsonProperty("unit_number")]
         public string UnitNumber { get; set; }

@@ -8,6 +8,8 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using Sardinian.Delivery.Core.Utility;
+using Newtonsoft.Json.Linq;
+using System.Collections.ObjectModel;
 
 namespace Sardinian.Delivery.Core.Services
 {
@@ -61,9 +63,16 @@ namespace Sardinian.Delivery.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<string> GenerateGuestToken()
+        public async Task<string> GenerateGuestToken()
         {
-            throw new NotImplementedException();
+            string serviceUrl = string.Format("{0}/{1}", productionUrl, Constants.CreateGuestToken);
+            
+            GuestTokenRequest request = new GuestTokenRequest() { ClientId = Constants.ClientId };
+            string data = JsonConvert.SerializeObject(request);
+
+            await MakePostRequest(null, serviceUrl, data);
+
+            return String.Empty;
         }
 
         public Task<GetPaymentsResponse> GetPayments(string accessToken, string merchantId)
@@ -116,25 +125,58 @@ namespace Sardinian.Delivery.Core.Services
             throw new NotImplementedException();
         }
 
-        public void GetAllBusinesses(string method = "delivery")
+        public async Task<ObservableCollection<Merchant>> GetAllBusinesses(string userAddress, string method = "delivery")
         {
-            string serviceUrl = string.Format("{0}{1}{2}", productionUrl, Constants.MerchantSearch, method+"?address=400 East 11th St, New York, NY, 10009");
-            MakeGetRequest(null, serviceUrl);
+            ObservableCollection<Merchant> returnedMerchants = new ObservableCollection<Merchant>();
+            userAddress = userAddress.Replace(',',' ');
+            string address = "address="+WebUtility.UrlEncode(userAddress);
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}&{4}", productionUrl, Constants.MerchantSearch, method, Constants.ClientId, address);
+
+            try
+            {
+                JObject retVal = await MakeGetRequest(null, serviceUrl);
+                var merchants = retVal["merchants"].Children().ToList();
+                foreach (var merchant in merchants)
+                {
+                    try
+                    {
+                        Merchant business = JsonConvert.DeserializeObject<Merchant>(merchant.ToString());
+                        returnedMerchants.Add(business);
+                    }
+                    catch (JsonReaderException) 
+                    { 
+                        //TODO: Ignoring malformed JSON for now..
+                    }
+                }
+                return returnedMerchants;
+            }
+            catch
+            {
+                //TODO: Rethrow for now
+                throw;
+            }
         }
 
         #region Private Helpers
-        private async void MakeGetRequest(string accessToken, string serviceUrl)
+        private async Task<JObject> MakeGetRequest(string accessToken, string serviceUrl, bool guestMode = true)
         {
             HttpWebRequest req = WebRequest.Create(serviceUrl) as HttpWebRequest;
             
-            string result = null;
+            if(!String.IsNullOrEmpty(accessToken))
+                req.Headers["Guest-Token"] = accessToken;
+            
+            req.Method = "GET";
+            JObject jsonResult = null;
+           
             using (HttpWebResponse resp = await req.GetResponseAsync() as HttpWebResponse)
             {
                 StreamReader reader = new StreamReader(resp.GetResponseStream());
-                result = reader.ReadToEnd();
+                string result = reader.ReadToEnd();
+                jsonResult = JObject.Parse(result);
             }
+            return jsonResult;
         }
-        private async void MakePostRequesst(string accessToken, string serviceUrl, string data)
+        private async Task MakePostRequest(string accessToken, string serviceUrl, string data)
         {
             HttpWebRequest req = WebRequest.Create(new Uri(serviceUrl)) as HttpWebRequest;
             req.Method = "POST";

@@ -71,7 +71,6 @@ namespace Sardinian.Delivery.Core.DTO
 
     public class Merchant
     {
-
         [JsonProperty("id")]
         public string Id { get; set; }
 

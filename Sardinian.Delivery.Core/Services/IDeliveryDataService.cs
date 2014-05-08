@@ -1,6 +1,7 @@
 ﻿using Sardinian.Delivery.Core.DTO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,6 @@ namespace Sardinian.Delivery.Core.Services
 
         void GetMenuItem(string merchantId, string itemId);
 
-        void GetAllBusinesses(string method = "delivery");
+        Task<ObservableCollection<Merchant>> GetAllBusinesses(string userAddress, string method = "delivery");
     }
 }
