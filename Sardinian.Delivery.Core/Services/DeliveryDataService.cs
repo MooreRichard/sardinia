@@ -110,12 +110,21 @@ namespace Sardinian.Delivery.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<GetMerchantInfoResponse> GetBusinessInfo(string merchantId)
+        public async Task<GetMerchantInfoResponse> GetMerchantInfo(string merchantId)
         {
-            throw new NotImplementedException();
+            //GET /merchant/{merchant_id}/menu
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.MerchantMenu, merchantId, Constants.ClientId);
+            try
+            {
+                JObject retVal = await MakeGetRequest(null, serviceUrl);
+                var info = JsonConvert.DeserializeObject<GetMerchantInfoResponse>(retVal.ToString());
+                return info;
+            }
+            catch
+            {
+                return null;
+            }
         }
-
-        
 
         public async Task<GetMerchantMenuItemResponse> GetMerchantMenuItem(string merchantId, string itemId)
         {

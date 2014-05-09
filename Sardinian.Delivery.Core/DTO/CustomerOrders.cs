@@ -7,22 +7,6 @@ using System.Threading.Tasks;
 
 namespace Sardinian.Delivery.Core.DTO
 {
-    public class Url
-    {
-
-        [JsonProperty("geo")]
-        public object Geo { get; set; }
-
-        [JsonProperty("merchant")]
-        public object Merchant { get; set; }
-
-        [JsonProperty("geo_tag")]
-        public string GeoTag { get; set; }
-
-        [JsonProperty("short_tag")]
-        public string ShortTag { get; set; }
-    }
-
     public class Option2
     {
 

@@ -260,31 +260,6 @@ namespace Sardinian.Delivery.Core.DTO
         public TimesOpen13[] TimesOpen { get; set; }
     }
 
-    public class Delivery
-    {
-
-        [JsonProperty("sunday")]
-        public Sunday2 Sunday { get; set; }
-
-        [JsonProperty("monday")]
-        public Monday2 Monday { get; set; }
-
-        [JsonProperty("tuesday")]
-        public Tuesday2 Tuesday { get; set; }
-
-        [JsonProperty("wednesday")]
-        public Wednesday2 Wednesday { get; set; }
-
-        [JsonProperty("thursday")]
-        public Thursday2 Thursday { get; set; }
-
-        [JsonProperty("friday")]
-        public Friday2 Friday { get; set; }
-
-        [JsonProperty("saturday")]
-        public Saturday2 Saturday { get; set; }
-    }
-
     public class StandardSchedule
     {
 
@@ -593,16 +568,6 @@ namespace Sardinian.Delivery.Core.DTO
 
         [JsonProperty("wednesday")]
         public Wednesday4 Wednesday { get; set; }
-    }
-
-    public class Availability
-    {
-
-        [JsonProperty("pickup")]
-        public bool Pickup { get; set; }
-
-        [JsonProperty("delivery")]
-        public bool Delivery { get; set; }
     }
 
     public class CurrentSchedule

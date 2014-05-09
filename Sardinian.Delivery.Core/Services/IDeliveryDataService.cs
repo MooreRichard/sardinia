@@ -44,7 +44,7 @@ namespace Sardinian.Delivery.Core.Services
 
         Task<GetMerchantHoursResponse> GetBusinessAndDeliveryHours(string merchantId);
 
-        Task<GetMerchantInfoResponse> GetBusinessInfo(string merchantId);
+        Task<GetMerchantInfoResponse> GetMerchantInfo(string merchantId);
 
         Task<GetMerchantMenuResponse> GetMerchantMenu(string merchantId);
 

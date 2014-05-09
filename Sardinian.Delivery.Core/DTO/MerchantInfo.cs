@@ -7,8 +7,47 @@ using System.Threading.Tasks;
 
 namespace Sardinian.Delivery.Core.DTO
 {
+    public class Location
+    {
+
+        [JsonProperty("street")]
+        public string Street { get; set; }
+
+        [JsonProperty("city")]
+        public string City { get; set; }
+
+        [JsonProperty("state")]
+        public string State { get; set; }
+
+        [JsonProperty("zip")]
+        public string Zip { get; set; }
+
+        [JsonProperty("longitude")]
+        public double Longitude { get; set; }
+
+        [JsonProperty("latitude")]
+        public double Latitude { get; set; }
+
+        [JsonProperty("landmark")]
+        public string Landmark { get; set; }
+    }
+
+    public class Url
+    {
+
+        [JsonProperty("geo_tag")]
+        public string GeoTag { get; set; }
+
+        [JsonProperty("short_tag")]
+        public string ShortTag { get; set; }
+
+        [JsonProperty("complete")]
+        public string Complete { get; set; }
+    }
+
     public class Summary
     {
+
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -40,6 +79,48 @@ namespace Sardinian.Delivery.Core.DTO
         public string ActivationDate { get; set; }
     }
 
+    public class Availability
+    {
+
+        [JsonProperty("pickup")]
+        public bool Pickup { get; set; }
+
+        [JsonProperty("delivery")]
+        public bool Delivery { get; set; }
+
+        [JsonProperty("last_pickup_time")]
+        public string LastPickupTime { get; set; }
+
+        [JsonProperty("last_delivery_time")]
+        public string LastDeliveryTime { get; set; }
+
+        [JsonProperty("next_pickup_time")]
+        public object NextPickupTime { get; set; }
+
+        [JsonProperty("next_delivery_time")]
+        public object NextDeliveryTime { get; set; }
+    }
+
+    public class Delivery
+    {
+
+        [JsonProperty("lowest")]
+        public int Lowest { get; set; }
+
+        [JsonProperty("highest")]
+        public int Highest { get; set; }
+    }
+
+    public class Minimum
+    {
+
+        [JsonProperty("delivery")]
+        public Delivery Delivery { get; set; }
+
+        [JsonProperty("pickup")]
+        public int Pickup { get; set; }
+    }
+
     public class Ordering
     {
 
@@ -57,20 +138,14 @@ namespace Sardinian.Delivery.Core.DTO
 
         [JsonProperty("order_type")]
         public string OrderType { get; set; }
-    }
 
-    public class Minimum
-    {
-
-        [JsonProperty("delivery")]
-        public Delivery Delivery { get; set; }
-
-        [JsonProperty("pickup")]
-        public int Pickup { get; set; }
+        [JsonProperty("minimum")]
+        public Minimum Minimum { get; set; }
     }
 
     public class Merchant
     {
+
         [JsonProperty("id")]
         public string Id { get; set; }
 
@@ -82,9 +157,6 @@ namespace Sardinian.Delivery.Core.DTO
 
         [JsonProperty("ordering")]
         public Ordering Ordering { get; set; }
-
-        [JsonProperty("minimum")]
-        public Minimum Minimum { get; set; }
     }
 
     public class GetMerchantInfoResponse

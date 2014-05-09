@@ -39,48 +39,6 @@ namespace Sardinian.Delivery.Core.DTO
         public string DevMsg { get; set; }
     }
 
-    public class Location
-    {
-
-        [JsonProperty("street")]
-        public string Street { get; set; }
-
-        [JsonProperty("city")]
-        public string City { get; set; }
-
-        [JsonProperty("state")]
-        public string State { get; set; }
-
-        [JsonProperty("zip")]
-        public string Zipcode { get; set; }
-
-        [JsonProperty("longitude")]
-        public string Longitude { get; set; }
-
-        [JsonProperty("latitude")]
-        public string Latitude { get; set; }
-
-        [JsonProperty("location_id")]
-        public string LocationId { get; set; }
-
-        [JsonProperty("phone")]
-        public string Phone { get; set; }
-
-        [JsonProperty("cross_streets")]
-        public string CrossStreets { get; set; }
-
-        [JsonProperty("landmark")]
-        public string Landmark { get; set; }
-
-        [JsonProperty("distance")]
-        public string Distance { get; set; }
-
-        [JsonProperty("unit_number")]
-        public string UnitNumber { get; set; }
-
-        [JsonProperty("company")]
-        public string Company { get; set; }
-    }
 
     public class CreateLocationResponse
     {
