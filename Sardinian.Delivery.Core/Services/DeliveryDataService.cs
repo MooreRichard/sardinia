@@ -115,17 +115,41 @@ namespace Sardinian.Delivery.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<GetMerchantMenuResponse> GetBusinessMenu(string merchantId)
+        
+
+        public async Task<GetMerchantMenuItemResponse> GetMerchantMenuItem(string merchantId, string itemId)
         {
-            throw new NotImplementedException();
+            //GET /merchant/{merchant_id}/menu/{item_id}
+            string serviceUrl = string.Format("{0}{1}{2}/menu/{3}?client_id={4}", productionUrl, Constants.MerchantMenu, merchantId, itemId, Constants.ClientId);
+            try
+            {
+                JObject retVal = await MakeGetRequest(null, serviceUrl);
+                var merchantMenuItem = JsonConvert.DeserializeObject<GetMerchantMenuItemResponse>(retVal.ToString());
+                return merchantMenuItem;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        public void GetMenuItem(string merchantId, string itemId)
+        public async Task<GetMerchantMenuResponse> GetMerchantMenu(string merchantId)
         {
-            throw new NotImplementedException();
+            //GET /merchant/{merchant_id}/
+            string serviceUrl = string.Format("{0}{1}{2}/menu?client_id={3}", productionUrl, Constants.MerchantMenu, merchantId, Constants.ClientId);
+            try
+            {
+                JObject retVal = await MakeGetRequest(null, serviceUrl);
+                var merchantMenu = JsonConvert.DeserializeObject<GetMerchantMenuResponse>(retVal.ToString());
+                return merchantMenu;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        public async Task<ObservableCollection<Merchant>> GetAllBusinesses(string userAddress, string method = "delivery")
+        public async Task<ObservableCollection<Merchant>> GetMerchants(string userAddress, string method = "delivery")
         {
             ObservableCollection<Merchant> returnedMerchants = new ObservableCollection<Merchant>();
             userAddress = userAddress.Replace(',',' ');

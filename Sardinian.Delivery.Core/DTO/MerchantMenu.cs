@@ -102,28 +102,19 @@ namespace Sardinian.Delivery.Core.DTO
         public string Name { get; set; }
 
         [JsonProperty("description")]
-        public object Description { get; set; }
+        public string Description { get; set; }
 
         [JsonProperty("price")]
-        public string Price { get; set; }
+        public int Price { get; set; }
 
         [JsonProperty("max_price")]
-        public object MaxPrice { get; set; }
+        public int MaxPrice { get; set; }
 
         [JsonProperty("type")]
         public string Type { get; set; }
 
         [JsonProperty("children")]
-        public Child4[] Children { get; set; }
-
-        [JsonProperty("min_qty")]
-        public string MinQty { get; set; }
-
-        [JsonProperty("max_qty")]
-        public string MaxQty { get; set; }
-
-        [JsonProperty("increment")]
-        public string Increment { get; set; }
+        public object[] Children { get; set; }
     }
 
     public class Child2
@@ -135,26 +126,23 @@ namespace Sardinian.Delivery.Core.DTO
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("url")]
-        public string Url { get; set; }
-
         [JsonProperty("description")]
-        public object Description { get; set; }
+        public string Description { get; set; }
+
+        [JsonProperty("min_selection")]
+        public int MinSelection { get; set; }
+
+        [JsonProperty("max_selection")]
+        public int MaxSelection { get; set; }
+
+        [JsonProperty("sel_dep")]
+        public int SelDep { get; set; }
 
         [JsonProperty("type")]
         public string Type { get; set; }
 
         [JsonProperty("children")]
         public Child3[] Children { get; set; }
-
-        [JsonProperty("min_selection")]
-        public string MinSelection { get; set; }
-
-        [JsonProperty("max_selection")]
-        public string MaxSelection { get; set; }
-
-        [JsonProperty("sel_dep")]
-        public int? SelDep { get; set; }
     }
 
     public class Child
@@ -167,37 +155,28 @@ namespace Sardinian.Delivery.Core.DTO
         public string Name { get; set; }
 
         [JsonProperty("description")]
-        public object Description { get; set; }
-
-        [JsonProperty("schedule")]
-        public int[] Schedule { get; set; }
+        public string Description { get; set; }
 
         [JsonProperty("min_qty")]
-        public string MinQty { get; set; }
+        public int MinQty { get; set; }
 
         [JsonProperty("max_qty")]
-        public string MaxQty { get; set; }
+        public int MaxQty { get; set; }
 
         [JsonProperty("price")]
-        public string Price { get; set; }
+        public double Price { get; set; }
 
         [JsonProperty("max_price")]
-        public string MaxPrice { get; set; }
+        public double MaxPrice { get; set; }
+
+        [JsonProperty("increment")]
+        public int Increment { get; set; }
 
         [JsonProperty("type")]
         public string Type { get; set; }
 
         [JsonProperty("children")]
         public Child2[] Children { get; set; }
-
-        [JsonProperty("increments")]
-        public double? Increments { get; set; }
-
-        [JsonProperty("qty_name_singular")]
-        public string QtyNameSingular { get; set; }
-
-        [JsonProperty("qty_name_plural")]
-        public string QtyNamePlural { get; set; }
     }
 
     public class Menu
@@ -217,6 +196,19 @@ namespace Sardinian.Delivery.Core.DTO
 
         [JsonProperty("children")]
         public Child[] Children { get; set; }
+    }
+
+    public class GetMerchantMenuItemResponse
+    {
+
+        [JsonProperty("schedule")]
+        public Schedule[] Schedule { get; set; }
+
+        [JsonProperty("warnings")]
+        public Warning[] Warnings { get; set; }
+
+        [JsonProperty("item")]
+        public Item[] Item { get; set; }
     }
 
     public class GetMerchantMenuResponse

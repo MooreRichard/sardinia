@@ -17,17 +17,20 @@ namespace Sardinian.Delivery.Core.DTO
     public class Item
     {
 
-        [JsonProperty("item_id")]
-        public string ItemId { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
 
-        [JsonProperty("item_qty")]
-        public int ItemQty { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
 
-        [JsonProperty("option_qty")]
-        public OptionQty OptionQty { get; set; }
+        [JsonProperty("description")]
+        public string Description { get; set; }
 
-        [JsonProperty("instructions")]
-        public string Instructions { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("children")]
+        public Child[] Children { get; set; }
     }
 
     public class AddItemRequest

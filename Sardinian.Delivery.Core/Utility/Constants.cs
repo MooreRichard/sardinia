@@ -8,6 +8,8 @@ namespace Sardinian.Delivery.Core.Utility
 {
     public class Constants
     {
+        public const string MerchantMenu = "/merchant/";
+        public const string MerchantMenuItem = "/merchant/";
         public const string MerchantSearch = "/merchant/search/";
         public const string CreateGuestToken = "/api/v1/customer/auth/guest";
         public const string ClientId = "MmY0OTcwOWQzZTAzY2UzMDMyZGQzMGE4ZDk3YjEyNTdh";

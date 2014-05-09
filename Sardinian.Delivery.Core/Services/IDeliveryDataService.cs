@@ -46,10 +46,10 @@ namespace Sardinian.Delivery.Core.Services
 
         Task<GetMerchantInfoResponse> GetBusinessInfo(string merchantId);
 
-        Task<GetMerchantMenuResponse> GetBusinessMenu(string merchantId);
+        Task<GetMerchantMenuResponse> GetMerchantMenu(string merchantId);
 
-        void GetMenuItem(string merchantId, string itemId);
+        Task<GetMerchantMenuItemResponse> GetMerchantMenuItem(string merchantId, string itemId);
 
-        Task<ObservableCollection<Merchant>> GetAllBusinesses(string userAddress, string method = "delivery");
+        Task<ObservableCollection<Merchant>> GetMerchants(string userAddress, string method = "delivery");
     }
 }
