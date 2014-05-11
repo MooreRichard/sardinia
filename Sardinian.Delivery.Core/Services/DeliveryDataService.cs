@@ -125,7 +125,6 @@ namespace Sardinian.Delivery.Core.Services
 
         public async Task<GetContentsResponse> GetCartItems(string merchantId)
         {
-            //GET /merchant/{merchant_id}/menu
             string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
             try
             {
@@ -139,14 +138,34 @@ namespace Sardinian.Delivery.Core.Services
             }
         }
 
-        public Task<AddItemResponse> ClearCart(string merchantId)
+        public async Task<AddItemResponse> ClearCart(string merchantId, ClearGuestCartItemRequest requestObject)
         {
-            throw new NotImplementedException();
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            try
+            {
+                string data = JsonConvert.SerializeObject(requestObject);
+                await MakeDeleteRequest(null, serviceUrl, data);
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        public Task<AddItemResponse> RemoveCartItem(string merchantId, string item_key)
+        public async Task<AddItemResponse> RemoveCartItem(string merchantId, RemoveGuestCartItemRequest requestObject)
         {
-            throw new NotImplementedException();
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            try
+            {
+                string data = JsonConvert.SerializeObject(requestObject);
+                await MakeDeleteRequest(null, serviceUrl, data);
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
         #endregion
 
@@ -289,6 +308,35 @@ namespace Sardinian.Delivery.Core.Services
         {
             HttpWebRequest req = WebRequest.Create(new Uri(serviceUrl)) as HttpWebRequest;
             req.Method = "PUT";
+            req.ContentType = "application/x-www-form-urlencoded";
+
+            if (!String.IsNullOrEmpty(_guestToken))
+                req.Headers["Guest-Token"] = _guestToken;
+
+            if (!string.IsNullOrEmpty(accessToken))
+                req.Headers["Authoriztion"] = accessToken;
+
+            // Encode the parameters as form data:
+            byte[] formData = UTF8Encoding.UTF8.GetBytes(data);
+
+            // Send the request:
+            using (Stream post = await req.GetRequestStreamAsync())
+            {
+                post.Write(formData, 0, formData.Length);
+            }
+
+            // Pick up the response:
+            string result = "";
+            using (HttpWebResponse resp = await req.GetResponseAsync() as HttpWebResponse)
+            {
+                StreamReader reader = new StreamReader(resp.GetResponseStream());
+                result = reader.ReadToEnd();
+            }
+        }
+        private async Task MakeDeleteRequest(string accessToken, string serviceUrl, string data)
+        {
+            HttpWebRequest req = WebRequest.Create(new Uri(serviceUrl)) as HttpWebRequest;
+            req.Method = "DELETE";
             req.ContentType = "application/x-www-form-urlencoded";
 
             if (!String.IsNullOrEmpty(_guestToken))

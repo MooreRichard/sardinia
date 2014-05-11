@@ -56,7 +56,6 @@ namespace Sardinian.Delivery.Core.DTO
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
     }
-
     
     public class ModifyGuestItemRequest
     {
@@ -71,8 +70,16 @@ namespace Sardinian.Delivery.Core.DTO
         public string OrderTime { get; set; }
     }
 
-    public class ClearCartItemRequest
+    public class ClearGuestCartItemRequest
     {
+        [JsonProperty("client_id")]
+        public string ClientId { get; set; }
+    }
+
+    public class RemoveGuestCartItemRequest
+    {
+        [JsonProperty("client_id")]
+        public string ClientId { get; set; }
 
         [JsonProperty("cart_index")]
         public int CartIndex { get; set; }

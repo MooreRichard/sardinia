@@ -24,9 +24,10 @@ namespace Sardinian.Delivery.Core.Services
 
         Task<GetContentsResponse> GetCartItems(string merchantId);
 
-        Task<AddItemResponse> ClearCart(string merchantId);
+        Task<AddItemResponse> ClearCart(string merchantId, ClearGuestCartItemRequest requestObject);
 
-        Task<AddItemResponse> RemoveCartItem(string merchantId, string item_key);
+        Task<AddItemResponse> RemoveCartItem(string merchantId, RemoveGuestCartItemRequest requestObject);
+
 
         Task<string> GenerateGuestToken();
 
