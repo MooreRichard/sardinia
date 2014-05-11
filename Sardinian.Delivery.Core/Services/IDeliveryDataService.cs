@@ -43,7 +43,7 @@ namespace Sardinian.Delivery.Core.Services
 
         Task<GetCreditCardResponse> GetAvailableCreditCards(string accesToken, bool includeExpiredCards = true);
 
-        Task<GetMerchantHoursResponse> GetBusinessAndDeliveryHours(string merchantId);
+        Task<GetMerchantHoursResponse> GetMerchantHours(string merchantId);
 
         Task<GetMerchantInfoResponse> GetMerchantInfo(string merchantId);
 

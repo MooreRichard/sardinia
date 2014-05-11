@@ -19,6 +19,7 @@ namespace Sardinian.Delivery.Core.Services
         private const string productionUrl = "https://api.delivery.com";
         private string _guestToken = "";
 
+        #region Location-related services
         public Task<CreateLocationResponse> CreateLocation(string accessToken, CreateLocationRequest requestObject)
         {
             throw new NotImplementedException();
@@ -38,23 +39,10 @@ namespace Sardinian.Delivery.Core.Services
         {
             throw new NotImplementedException();
         }
+        #endregion
 
-        public Task<GetPaymentsResponse> GetPayments(string accessToken, string merchantId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<PlaceOrderResponse> PlaceOrder(string merchantId, PlaceOrderRequest requestObject)
-        {
-            throw new NotImplementedException();
-        }
-
+        #region Non-guest user order services
         public Task<ViewOrderResponse> GetOrder(string accessToken, string orderId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ViewOrderHistoryResponse> GetOrderHistory(string accessToken)
         {
             throw new NotImplementedException();
         }
@@ -64,15 +52,49 @@ namespace Sardinian.Delivery.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<GetCreditCardResponse> GetAvailableCreditCards(string accesToken, bool includeExpiredCards = true)
+        public Task<ViewOrderHistoryResponse> GetOrderHistory(string accessToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<GetMerchantHoursResponse> GetBusinessAndDeliveryHours(string merchantId)
+        public Task<GetCreditCardResponse> GetAvailableCreditCards(string accesToken, bool includeExpiredCards = true)
         {
             throw new NotImplementedException();
         }
+        #endregion
+
+        #region Order Placing Services
+        public async Task<GetPaymentsResponse> GetPayments(string accessToken, string merchantId)
+        {
+            string serviceUrl = string.Format("{0}{1}{2}/checkout?client_id={3}", productionUrl, Constants.CartEndpoint, merchantId, Constants.ClientId);
+            try
+            {
+                JObject jsonResult = await MakeGetRequest(null, serviceUrl);
+                GetPaymentsResponse response = JsonConvert.DeserializeObject<GetPaymentsResponse>(jsonResult.ToString());
+                return response;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<PlaceOrderResponse> PlaceOrder(string merchantId, PlaceOrderRequest requestObject)
+        {
+            string serviceUrl = string.Format("{0}{1}{2}/checkout?client_id={3}", productionUrl, Constants.CartEndpoint, merchantId, Constants.ClientId);
+            try
+            {
+                string data = JsonConvert.SerializeObject(requestObject);
+                JObject jsonResult = await MakePostRequest(null, serviceUrl, data);
+                PlaceOrderResponse response = JsonConvert.DeserializeObject<PlaceOrderResponse>(jsonResult.ToString());
+                return response;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        #endregion
 
         #region Guest Authentication
         public async Task<string> GenerateGuestToken()
@@ -95,7 +117,7 @@ namespace Sardinian.Delivery.Core.Services
         #region Cart Related Services
         public async Task<AddItemResponse> AddItemToCart(string merchantId, AddGuestItemRequest requestObject)
         {
-            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.CartEndpoint, merchantId, Constants.ClientId);
             try
             {
                 string data = JsonConvert.SerializeObject(requestObject);
@@ -110,7 +132,7 @@ namespace Sardinian.Delivery.Core.Services
 
         public async Task<ModifyItemResponse> ModifyCartItem(string merchantId, ModifyGuestItemRequest requestObject)
         {
-            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.CartEndpoint, merchantId, Constants.ClientId);
             try
             {
                 string data = JsonConvert.SerializeObject(requestObject);
@@ -125,7 +147,7 @@ namespace Sardinian.Delivery.Core.Services
 
         public async Task<GetContentsResponse> GetCartItems(string merchantId)
         {
-            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.CartEndpoint, merchantId, Constants.ClientId);
             try
             {
                 JObject retVal = await MakeGetRequest(null, serviceUrl);
@@ -140,7 +162,7 @@ namespace Sardinian.Delivery.Core.Services
 
         public async Task<AddItemResponse> ClearCart(string merchantId, ClearGuestCartItemRequest requestObject)
         {
-            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.CartEndpoint, merchantId, Constants.ClientId);
             try
             {
                 string data = JsonConvert.SerializeObject(requestObject);
@@ -155,7 +177,7 @@ namespace Sardinian.Delivery.Core.Services
 
         public async Task<AddItemResponse> RemoveCartItem(string merchantId, RemoveGuestCartItemRequest requestObject)
         {
-            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.CartEndpoint, merchantId, Constants.ClientId);
             try
             {
                 string data = JsonConvert.SerializeObject(requestObject);
@@ -170,11 +192,25 @@ namespace Sardinian.Delivery.Core.Services
         #endregion
 
         #region Merchant and Menu Related Servies
+        public async Task<GetMerchantHoursResponse> GetMerchantHours(string merchantId)
+        {
+            string serviceUrl = string.Format("{0}{1}{2}/hours?client_id={3}", productionUrl, Constants.MerchantEndpoint, merchantId, Constants.ClientId);
+            try
+            {
+                JObject retVal = await MakeGetRequest(null, serviceUrl);
+                var merchantMenu = JsonConvert.DeserializeObject<GetMerchantHoursResponse>(retVal.ToString());
+                return merchantMenu;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         public async Task<GetMerchantInfoResponse> GetMerchantInfo(string merchantId)
         {
             //GET /merchant/{merchant_id}/menu
-            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.MerchantMenuEndpoint, merchantId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.MerchantEndpoint, merchantId, Constants.ClientId);
             try
             {
                 JObject retVal = await MakeGetRequest(null, serviceUrl);
@@ -190,7 +226,7 @@ namespace Sardinian.Delivery.Core.Services
         public async Task<GetMerchantMenuItemResponse> GetMerchantMenuItem(string merchantId, string itemId)
         {
             //GET /merchant/{merchant_id}/menu/{item_id}
-            string serviceUrl = string.Format("{0}{1}{2}/menu/{3}?client_id={4}", productionUrl, Constants.MerchantMenuEndpoint, merchantId, itemId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}/menu/{3}?client_id={4}", productionUrl, Constants.MerchantEndpoint, merchantId, itemId, Constants.ClientId);
             try
             {
                 JObject retVal = await MakeGetRequest(null, serviceUrl);
@@ -206,7 +242,7 @@ namespace Sardinian.Delivery.Core.Services
         public async Task<GetMerchantMenuResponse> GetMerchantMenu(string merchantId)
         {
             //GET /merchant/{merchant_id}/
-            string serviceUrl = string.Format("{0}{1}{2}/menu?client_id={3}", productionUrl, Constants.MerchantMenuEndpoint, merchantId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}/menu?client_id={3}", productionUrl, Constants.MerchantEndpoint, merchantId, Constants.ClientId);
             try
             {
                 JObject retVal = await MakeGetRequest(null, serviceUrl);
@@ -224,7 +260,7 @@ namespace Sardinian.Delivery.Core.Services
             ObservableCollection<Merchant> returnedMerchants = new ObservableCollection<Merchant>();
             userAddress = userAddress.Replace(',',' ');
             string address = "address="+WebUtility.UrlEncode(userAddress);
-            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}&{4}", productionUrl, Constants.MerchantSearchEndpoint, method, Constants.ClientId, address);
+            string serviceUrl = string.Format("{0}{1}{2}search/?client_id={3}&{4}", productionUrl, Constants.MerchantEndpoint, method, Constants.ClientId, address);
 
             try
             {
@@ -275,7 +311,7 @@ namespace Sardinian.Delivery.Core.Services
             }
             return jsonResult;
         }
-        private async Task MakePostRequest(string accessToken, string serviceUrl, string data)
+        private async Task<JObject> MakePostRequest(string accessToken, string serviceUrl, string data)
         {
             HttpWebRequest req = WebRequest.Create(new Uri(serviceUrl)) as HttpWebRequest;
             req.Method = "POST";
@@ -296,15 +332,20 @@ namespace Sardinian.Delivery.Core.Services
                 post.Write(formData, 0, formData.Length);
             }
 
-            // Pick up the response:
-            string result = "";
+            // Pick up the response:         
+            JObject retValue = null;
             using (HttpWebResponse resp = await req.GetResponseAsync()as HttpWebResponse)
             {
-                StreamReader reader = new StreamReader(resp.GetResponseStream());
-                result = reader.ReadToEnd();
+                if (resp.StatusCode == HttpStatusCode.OK)
+                {
+                    StreamReader reader = new StreamReader(resp.GetResponseStream());
+                    string result = reader.ReadToEnd();
+                    retValue = JObject.Parse(result);
+                }
             }
+            return retValue;
         }
-        private async Task MakePutRequest(string accessToken, string serviceUrl, string data)
+        private async Task<JObject> MakePutRequest(string accessToken, string serviceUrl, string data)
         {
             HttpWebRequest req = WebRequest.Create(new Uri(serviceUrl)) as HttpWebRequest;
             req.Method = "PUT";
@@ -326,14 +367,19 @@ namespace Sardinian.Delivery.Core.Services
             }
 
             // Pick up the response:
-            string result = "";
+            JObject retValue = null;
             using (HttpWebResponse resp = await req.GetResponseAsync() as HttpWebResponse)
             {
-                StreamReader reader = new StreamReader(resp.GetResponseStream());
-                result = reader.ReadToEnd();
+                if (resp.StatusCode == HttpStatusCode.OK)
+                {
+                    StreamReader reader = new StreamReader(resp.GetResponseStream());
+                    string result = reader.ReadToEnd();
+                    retValue = JObject.Parse(result);
+                }
             }
+            return retValue;
         }
-        private async Task MakeDeleteRequest(string accessToken, string serviceUrl, string data)
+        private async Task<JObject> MakeDeleteRequest(string accessToken, string serviceUrl, string data)
         {
             HttpWebRequest req = WebRequest.Create(new Uri(serviceUrl)) as HttpWebRequest;
             req.Method = "DELETE";
@@ -355,12 +401,17 @@ namespace Sardinian.Delivery.Core.Services
             }
 
             // Pick up the response:
-            string result = "";
+            JObject retValue = null;
             using (HttpWebResponse resp = await req.GetResponseAsync() as HttpWebResponse)
             {
-                StreamReader reader = new StreamReader(resp.GetResponseStream());
-                result = reader.ReadToEnd();
+                if (resp.StatusCode == HttpStatusCode.OK)
+                {
+                    StreamReader reader = new StreamReader(resp.GetResponseStream());
+                    string result = reader.ReadToEnd();
+                    retValue = JObject.Parse(result);
+                }
             }
+            return retValue;
         }
         #endregion
     }
