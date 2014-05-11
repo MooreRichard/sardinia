@@ -33,23 +33,32 @@ namespace Sardinian.Delivery.Core.DTO
         public Child[] Children { get; set; }
     }
 
-    public class AddItemRequest
+
+    public class CartItem
+    {
+
+        [JsonProperty("item_id")]
+        public string ItemId { get; set; }
+
+        [JsonProperty("item_qty")]
+        public int ItemQty { get; set; }
+    }
+
+    public class AddGuestItemRequest
     {
 
         [JsonProperty("order_type")]
         public string OrderType { get; set; }
 
-        [JsonProperty("instructions")]
-        public string Instructions { get; set; }
-
         [JsonProperty("item")]
-        public Item Item { get; set; }
+        public CartItem Item { get; set; }
 
         [JsonProperty("client_id")]
         public string ClientId { get; set; }
     }
+
     
-    public class ModifyItemRequest
+    public class ModifyGuestItemRequest
     {
 
         [JsonProperty("item")]

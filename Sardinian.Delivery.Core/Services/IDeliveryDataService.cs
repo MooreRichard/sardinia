@@ -18,9 +18,9 @@ namespace Sardinian.Delivery.Core.Services
 
         Task<CreateLocationResponse> GetLocations(string accessToken);
 
-        Task<AddItemResponse> AddItemToCart(string merchantId, AddItemRequest requestObject);
+        Task<AddItemResponse> AddItemToCart(string merchantId, AddGuestItemRequest requestObject);
 
-        Task<ModifyItemResponse> ModifyCartItem(string merchantId, ModifyItemRequest requestObject);
+        Task<ModifyItemResponse> ModifyCartItem(string merchantId, ModifyGuestItemRequest requestObject);
 
         Task<GetContentsResponse> GetCartItems(string merchantId);
 

@@ -8,6 +8,7 @@ namespace Sardinian.Delivery.Core.Utility
 {
     public class Constants
     {
+        public const string GetCartItemsEndpoint = "/customer/cart/";
         public const string GuestTokenEndpoint = "/customer/auth/guest";
         public const string MerchantMenuEndpoint = "/merchant/";
         public const string MerchantMenuItemEndpoint = "/merchant/";

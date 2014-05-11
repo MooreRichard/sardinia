@@ -93,19 +93,50 @@ namespace Sardinian.Delivery.Core.Services
         #endregion
 
         #region Cart Related Services
-        public Task<AddItemResponse> AddItemToCart(string merchantId, AddItemRequest requestObject)
+        public async Task<AddItemResponse> AddItemToCart(string merchantId, AddGuestItemRequest requestObject)
         {
-            throw new NotImplementedException();
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            try
+            {
+                string data = JsonConvert.SerializeObject(requestObject);
+                await MakePostRequest(null, serviceUrl, data);
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        public Task<ModifyItemResponse> ModifyCartItem(string merchantId, ModifyItemRequest requestObject)
+        public async Task<ModifyItemResponse> ModifyCartItem(string merchantId, ModifyGuestItemRequest requestObject)
         {
-            throw new NotImplementedException();
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            try
+            {
+                string data = JsonConvert.SerializeObject(requestObject);
+                await MakePutRequest(null, serviceUrl, data);
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        public Task<GetContentsResponse> GetCartItems(string merchantId)
+        public async Task<GetContentsResponse> GetCartItems(string merchantId)
         {
-            throw new NotImplementedException();
+            //GET /merchant/{merchant_id}/menu
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.GetCartItemsEndpoint, merchantId, Constants.ClientId);
+            try
+            {
+                JObject retVal = await MakeGetRequest(null, serviceUrl);
+                var info = JsonConvert.DeserializeObject<GetContentsResponse>(retVal.ToString());
+                return info;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Task<AddItemResponse> ClearCart(string merchantId)
@@ -208,9 +239,12 @@ namespace Sardinian.Delivery.Core.Services
         {
             HttpWebRequest req = WebRequest.Create(serviceUrl) as HttpWebRequest;
             
-            if(!String.IsNullOrEmpty(accessToken))
-                req.Headers["Guest-Token"] = accessToken;
-            
+            if(!String.IsNullOrEmpty(_guestToken))
+                req.Headers["Guest-Token"] = _guestToken;
+
+            if (!string.IsNullOrEmpty(accessToken))
+                req.Headers["Authoriztion"] = accessToken;
+
             req.Method = "GET";
             JObject jsonResult = null;
            
@@ -228,6 +262,12 @@ namespace Sardinian.Delivery.Core.Services
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded";
 
+            if (!String.IsNullOrEmpty(_guestToken))
+                req.Headers["Guest-Token"] = _guestToken;
+
+            if (!string.IsNullOrEmpty(accessToken))
+                req.Headers["Authoriztion"] = accessToken;
+
             // Encode the parameters as form data:
             byte[] formData = UTF8Encoding.UTF8.GetBytes(data);
 
@@ -240,6 +280,35 @@ namespace Sardinian.Delivery.Core.Services
             // Pick up the response:
             string result = "";
             using (HttpWebResponse resp = await req.GetResponseAsync()as HttpWebResponse)
+            {
+                StreamReader reader = new StreamReader(resp.GetResponseStream());
+                result = reader.ReadToEnd();
+            }
+        }
+        private async Task MakePutRequest(string accessToken, string serviceUrl, string data)
+        {
+            HttpWebRequest req = WebRequest.Create(new Uri(serviceUrl)) as HttpWebRequest;
+            req.Method = "PUT";
+            req.ContentType = "application/x-www-form-urlencoded";
+
+            if (!String.IsNullOrEmpty(_guestToken))
+                req.Headers["Guest-Token"] = _guestToken;
+
+            if (!string.IsNullOrEmpty(accessToken))
+                req.Headers["Authoriztion"] = accessToken;
+
+            // Encode the parameters as form data:
+            byte[] formData = UTF8Encoding.UTF8.GetBytes(data);
+
+            // Send the request:
+            using (Stream post = await req.GetRequestStreamAsync())
+            {
+                post.Write(formData, 0, formData.Length);
+            }
+
+            // Pick up the response:
+            string result = "";
+            using (HttpWebResponse resp = await req.GetResponseAsync() as HttpWebResponse)
             {
                 StreamReader reader = new StreamReader(resp.GetResponseStream());
                 result = reader.ReadToEnd();

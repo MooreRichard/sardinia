@@ -145,6 +145,40 @@ namespace Sardinian.Delivery.Core.DTO
         public Child3[] Children { get; set; }
     }
 
+    public class MenuItemRequestObject
+    {
+
+        [JsonProperty("item_id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("itm_qty")]
+        public int MinQty { get; set; }
+
+        [JsonProperty("max_qty")]
+        public int MaxQty { get; set; }
+
+        [JsonProperty("price")]
+        public double Price { get; set; }
+
+        [JsonProperty("max_price")]
+        public double MaxPrice { get; set; }
+
+        [JsonProperty("increment")]
+        public int Increment { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("children")]
+        public Child2[] Children { get; set; }
+    }
+
     public class Child
     {
 
@@ -178,6 +212,8 @@ namespace Sardinian.Delivery.Core.DTO
         [JsonProperty("children")]
         public Child2[] Children { get; set; }
     }
+
+    
 
     public class Menu
     {
