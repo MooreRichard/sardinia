@@ -17,6 +17,7 @@ namespace Sardinian.Delivery.Core.Services
     {
         private const string developmentUrl = "http://sandbox.delivery.com";
         private const string productionUrl = "https://api.delivery.com";
+        private string _guestToken = "";
 
         public Task<CreateLocationResponse> CreateLocation(string accessToken, CreateLocationRequest requestObject)
         {
@@ -36,43 +37,6 @@ namespace Sardinian.Delivery.Core.Services
         public Task<CreateLocationResponse> GetLocations(string accessToken)
         {
             throw new NotImplementedException();
-        }
-
-        public Task<AddItemResponse> AddItemToCart(string merchantId, AddItemRequest requestObject)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ModifyItemResponse> ModifyCartItem(string merchantId, ModifyItemRequest requestObject)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<GetContentsResponse> GetCartItems(string merchantId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<AddItemResponse> ClearCart(string merchantId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<AddItemResponse> RemoveCartItem(string merchantId, string item_key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<string> GenerateGuestToken()
-        {
-            string serviceUrl = string.Format("{0}/{1}", productionUrl, Constants.CreateGuestToken);
-            
-            GuestTokenRequest request = new GuestTokenRequest() { ClientId = Constants.ClientId };
-            string data = JsonConvert.SerializeObject(request);
-
-            await MakePostRequest(null, serviceUrl, data);
-
-            return String.Empty;
         }
 
         public Task<GetPaymentsResponse> GetPayments(string accessToken, string merchantId)
@@ -110,10 +74,57 @@ namespace Sardinian.Delivery.Core.Services
             throw new NotImplementedException();
         }
 
+        #region Guest Authentication
+        public async Task<string> GenerateGuestToken()
+        {
+            string serviceUrl = string.Format("{0}{1}?client_id={2}", productionUrl, Constants.GuestTokenEndpoint, Constants.ClientId);
+            try
+            {
+                var result = await MakeGetRequest(null, serviceUrl);
+                _guestToken = result["Guest-Token"].ToString();
+            }
+            catch
+            {
+
+            }
+
+            return _guestToken;
+        }
+        #endregion
+
+        #region Cart Related Services
+        public Task<AddItemResponse> AddItemToCart(string merchantId, AddItemRequest requestObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ModifyItemResponse> ModifyCartItem(string merchantId, ModifyItemRequest requestObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GetContentsResponse> GetCartItems(string merchantId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AddItemResponse> ClearCart(string merchantId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AddItemResponse> RemoveCartItem(string merchantId, string item_key)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Merchant and Menu Related Servies
+
         public async Task<GetMerchantInfoResponse> GetMerchantInfo(string merchantId)
         {
             //GET /merchant/{merchant_id}/menu
-            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.MerchantMenu, merchantId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}", productionUrl, Constants.MerchantMenuEndpoint, merchantId, Constants.ClientId);
             try
             {
                 JObject retVal = await MakeGetRequest(null, serviceUrl);
@@ -129,7 +140,7 @@ namespace Sardinian.Delivery.Core.Services
         public async Task<GetMerchantMenuItemResponse> GetMerchantMenuItem(string merchantId, string itemId)
         {
             //GET /merchant/{merchant_id}/menu/{item_id}
-            string serviceUrl = string.Format("{0}{1}{2}/menu/{3}?client_id={4}", productionUrl, Constants.MerchantMenu, merchantId, itemId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}/menu/{3}?client_id={4}", productionUrl, Constants.MerchantMenuEndpoint, merchantId, itemId, Constants.ClientId);
             try
             {
                 JObject retVal = await MakeGetRequest(null, serviceUrl);
@@ -145,7 +156,7 @@ namespace Sardinian.Delivery.Core.Services
         public async Task<GetMerchantMenuResponse> GetMerchantMenu(string merchantId)
         {
             //GET /merchant/{merchant_id}/
-            string serviceUrl = string.Format("{0}{1}{2}/menu?client_id={3}", productionUrl, Constants.MerchantMenu, merchantId, Constants.ClientId);
+            string serviceUrl = string.Format("{0}{1}{2}/menu?client_id={3}", productionUrl, Constants.MerchantMenuEndpoint, merchantId, Constants.ClientId);
             try
             {
                 JObject retVal = await MakeGetRequest(null, serviceUrl);
@@ -163,7 +174,7 @@ namespace Sardinian.Delivery.Core.Services
             ObservableCollection<Merchant> returnedMerchants = new ObservableCollection<Merchant>();
             userAddress = userAddress.Replace(',',' ');
             string address = "address="+WebUtility.UrlEncode(userAddress);
-            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}&{4}", productionUrl, Constants.MerchantSearch, method, Constants.ClientId, address);
+            string serviceUrl = string.Format("{0}{1}{2}?client_id={3}&{4}", productionUrl, Constants.MerchantSearchEndpoint, method, Constants.ClientId, address);
 
             try
             {
@@ -189,6 +200,8 @@ namespace Sardinian.Delivery.Core.Services
                 throw;
             }
         }
+
+        #endregion
 
         #region Private Helpers
         private async Task<JObject> MakeGetRequest(string accessToken, string serviceUrl, bool guestMode = true)
