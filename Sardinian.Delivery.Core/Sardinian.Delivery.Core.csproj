@@ -46,6 +46,7 @@
     <Compile Include="Services\DeliveryDataService.cs" />
     <Compile Include="Services\IDeliveryDataService.cs" />
     <Compile Include="Utility\Constants.cs" />
+    <Compile Include="View Models\LandingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Threading.Tasks">

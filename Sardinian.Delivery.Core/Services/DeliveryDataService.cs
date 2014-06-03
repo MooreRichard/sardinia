@@ -260,7 +260,7 @@ namespace Sardinian.Delivery.Core.Services
             ObservableCollection<Merchant> returnedMerchants = new ObservableCollection<Merchant>();
             userAddress = userAddress.Replace(',',' ');
             string address = "address="+WebUtility.UrlEncode(userAddress);
-            string serviceUrl = string.Format("{0}{1}{2}search/?client_id={3}&{4}", productionUrl, Constants.MerchantEndpoint, method, Constants.ClientId, address);
+            string serviceUrl = string.Format("{0}{1}search/{2}?client_id={3}&{4}", productionUrl, Constants.MerchantEndpoint, method, Constants.ClientId, address);
 
             try
             {
@@ -271,6 +271,9 @@ namespace Sardinian.Delivery.Core.Services
                     try
                     {
                         Merchant business = JsonConvert.DeserializeObject<Merchant>(merchant.ToString());
+                        //TODO: Filter out Restaurants and only display Wines
+                        if (business.Summary.Type.ToLower() != "r")
+                            continue;
                         returnedMerchants.Add(business);
                     }
                     catch (JsonReaderException) 

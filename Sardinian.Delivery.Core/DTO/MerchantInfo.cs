@@ -140,7 +140,7 @@ namespace Sardinian.Delivery.Core.DTO
         public string OrderType { get; set; }
 
         [JsonProperty("minimum")]
-        public Minimum Minimum { get; set; }
+        public int Minimum { get; set; }
     }
 
     public class Merchant
