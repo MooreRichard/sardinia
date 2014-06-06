@@ -1,5 +1,6 @@
-﻿using Delivery.WindowsStore.Common;
-using Sardinian.Delivery.Core.Services;
+﻿using Delivery.Core.Services;
+using Delivery.WindowsStore.Common;
+using Microsoft.Practices.Prism.StoreApps;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,12 +18,12 @@ using Windows.UI.Xaml.Navigation;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
-namespace Delivery.WindowsStore
+namespace Delivery.WindowsStore.Views
 {
     /// <summary>
     /// A basic page that provides characteristics common to most applications.
     /// </summary>
-    public sealed partial class RestaurantLandingPage : Page
+    public sealed partial class RestaurantsLandingPage : VisualStateAwarePage
     {
 
         private NavigationHelper navigationHelper;
@@ -46,7 +47,7 @@ namespace Delivery.WindowsStore
         }
 
 
-        public RestaurantLandingPage()
+        public RestaurantsLandingPage()
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
@@ -107,5 +108,10 @@ namespace Delivery.WindowsStore
         }
 
         #endregion
+
+        private void gvMerchants_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sardinian.Delivery.Core.Utility
+namespace Delivery.Core.Utility
 {
     public class Constants
     {

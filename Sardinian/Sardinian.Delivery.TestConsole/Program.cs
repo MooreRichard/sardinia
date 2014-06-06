@@ -1,4 +1,4 @@
-﻿using Sardinian.Delivery.Core.DTO;
+﻿using Delivery.Core.DTO;
 using Sardinian.Delivery.Core.Services;
 using Sardinian.Delivery.Core.Utility;
 using System;

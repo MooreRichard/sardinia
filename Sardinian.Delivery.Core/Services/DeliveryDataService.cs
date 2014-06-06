@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sardinian.Delivery.Core.DTO;
+using Delivery.Core.DTO;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
-using Sardinian.Delivery.Core.Utility;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
+using Delivery.Core.Utility;
 
-namespace Sardinian.Delivery.Core.Services
+namespace Delivery.Core.Services
 {
     public class DeliveryDataService : IDeliveryDataService
     {
