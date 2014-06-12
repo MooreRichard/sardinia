@@ -15,9 +15,15 @@ namespace Delivery.Core.Services
 {
     public class DeliveryDataService : IDeliveryDataService
     {
+        #region 
+       
+        #endregion
+
+        #region Private
         private const string developmentUrl = "http://sandbox.delivery.com";
         private const string productionUrl = "https://api.delivery.com";
         private string _guestToken = "";
+        #endregion
 
         #region Location-related services
         public Task<CreateLocationResponse> CreateLocation(string accessToken, CreateLocationRequest requestObject)
@@ -417,5 +423,18 @@ namespace Delivery.Core.Services
             return retValue;
         }
         #endregion
+
+        private Merchant _currentMerchant;
+        public Merchant CurrentMerchant
+        {
+            get
+            {
+                return _currentMerchant;
+            }
+            set
+            {
+                _currentMerchant = value;
+            }
+        }
     }
 }

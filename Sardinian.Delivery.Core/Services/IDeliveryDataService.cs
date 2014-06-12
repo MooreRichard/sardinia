@@ -10,6 +10,8 @@ namespace Delivery.Core.Services
 {
     public interface IDeliveryDataService
     {
+        Merchant CurrentMerchant { get; set; }
+
         Task<CreateLocationResponse> CreateLocation(string accessToken, CreateLocationRequest requestObject);
 
         Task<CreateLocationResponse> UpdateLocation(string accessToken, string locationId);

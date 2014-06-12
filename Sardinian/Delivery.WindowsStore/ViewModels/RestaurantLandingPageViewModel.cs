@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace Delivery.WindowsStore.ViewModels
 {
-    public class RestaurantsLandingPageViewModel : ViewModel, INotifyPropertyChanged
+    public class RestaurantLandingPageViewModel : ViewModel, INotifyPropertyChanged
     {
         #region Services
         public IDeliveryDataService _dataService;
@@ -24,16 +24,6 @@ namespace Delivery.WindowsStore.ViewModels
         #endregion
 
         #region Databinding Properties
-        private Merchant _selectedMerchant;
-        public Merchant SelectedMerchant
-        {
-            get { return _selectedMerchant; }
-            set
-            {
-                SetProperty(ref _selectedMerchant, value);
-            }
-        }
-
         private ObservableCollection<Merchant> _merchants;
         public ObservableCollection<Merchant> Merchants
         {
@@ -44,9 +34,15 @@ namespace Delivery.WindowsStore.ViewModels
             }
         }
 
+        private Menu _merchantMenu;
+        public Menu MerchantMenu
+        {
+            get { return _merchantMenu; }
+            set { SetProperty(ref _merchantMenu, value); }
+        }
         #endregion
 
-        public RestaurantsLandingPageViewModel(IDeliveryDataService dataService, INavigationService navigationService, ISessionStateService sessionStateService)
+        public RestaurantLandingPageViewModel(IDeliveryDataService dataService, INavigationService navigationService, ISessionStateService sessionStateService)
         {
             _dataService = dataService;
             _navigationService = navigationService;
@@ -63,23 +59,22 @@ namespace Delivery.WindowsStore.ViewModels
                 return _initializeViewModelCommand ?? (_initializeViewModelCommand = new RelayCommand(
                     async delegate
                     {
-                        await _dataService.GenerateGuestToken();
-                        Merchants = await _dataService.GetMerchants("400 East 11th St New York NY 10009");
+                        System.Diagnostics.Debug.WriteLine("Restaurant Landing Page View Model Initializing..");
+                        Merchant merchantId = _sessionStateService.SessionState["CurrentMerchant"] as Merchant;
+                        var result = await _dataService.GetMerchantMenu(merchantId.Id);
+                        MerchantMenu = result.Menu[0];
+                        
+                        System.Diagnostics.Debug.WriteLine(result.Menu[0].Name);
                     }));
             }
         }
 
         private ICommand _navigateToSelectedRestaurantCommand;
+
         public ICommand NavigateToSelectedRestaurantCommand
         {
-            get
-            {
-                return _navigateToSelectedRestaurantCommand ?? (_navigateToSelectedRestaurantCommand = new RelayCommand(async delegate ()
-                    {
-                        _navigationService.Navigate("RestaurantLanding", _selectedMerchant);
-                       
-                    }));
-            }
+            get { return _navigateToSelectedRestaurantCommand; }
+            set { _navigateToSelectedRestaurantCommand = value; }
         }
 
         #endregion

@@ -59,6 +59,7 @@ namespace Delivery.WindowsStore
         {
             //Register singleton services with container 
             _container.RegisterInstance<INavigationService>(NavigationService);
+            _container.RegisterInstance<ISessionStateService>(SessionStateService);
 
             //Register view models with container
             _container.RegisterType<IDeliveryDataService, DeliveryDataService>();
