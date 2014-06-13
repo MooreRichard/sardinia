@@ -13,12 +13,12 @@
     <Page.Resources>
          <!--TODO: Delete this line if the key AppName is declared in App.xaml--> 
         <x:String x:Key="AppName">My Application</x:String>
-        <DataTemplate x:Name="MenuCategoryItemTemplate">
+        <!--<DataTemplate x:Name="MenuCategoryItemTemplate">
             <TextBlock Text="{Binding Name}" />
         </DataTemplate>
         <DataTemplate x:Name="MenuItemTemplate">
             <TextBlock Text="{Binding Name}" />
-        </DataTemplate>
+        </DataTemplate>-->
     </Page.Resources>
 
     <!--
@@ -43,7 +43,7 @@
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigateBackCommand}"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
                         VerticalAlignment="Top"
                         AutomationProperties.Name="Back"
@@ -54,8 +54,12 @@
         </Grid>
 
         <!---Menu Content -->
-        <GridView Grid.Row="1" ItemsSource="{Binding MerchantMenu.Children}" ItemTemplate="{StaticResource MenuCategoryItemTemplate}">
-            
+        <GridView Grid.Row="1" ItemsSource="{Binding MerchantMenu.Children}">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <common:MerchantMenuSectionControl MerchantMenuSectionTitle="{Binding Name}" MerchantMenuSectionItems="{Binding Children}"/>
+                </DataTemplate>
+            </GridView.ItemTemplate>
         </GridView>
     </Grid>
 </prism:VisualStateAwarePage>

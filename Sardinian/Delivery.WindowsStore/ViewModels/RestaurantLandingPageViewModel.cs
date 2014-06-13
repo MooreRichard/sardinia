@@ -62,6 +62,8 @@ namespace Delivery.WindowsStore.ViewModels
                         System.Diagnostics.Debug.WriteLine("Restaurant Landing Page View Model Initializing..");
                         Merchant merchantId = _sessionStateService.SessionState["CurrentMerchant"] as Merchant;
                         var result = await _dataService.GetMerchantMenu(merchantId.Id);
+                        if (result == null)
+                            return;
                         MerchantMenu = result.Menu[0];
                         
                         System.Diagnostics.Debug.WriteLine(result.Menu[0].Name);
@@ -69,8 +71,20 @@ namespace Delivery.WindowsStore.ViewModels
             }
         }
 
-        private ICommand _navigateToSelectedRestaurantCommand;
+        private ICommand _navigateBackCommand;
 
+        public ICommand NavigateBackCommand
+        {
+            get
+            {
+                return _navigateBackCommand ?? (_navigateBackCommand = new RelayCommand(delegate()
+                    {
+                        _navigationService.GoBack();
+                    }));
+            }
+        }
+
+        private ICommand _navigateToSelectedRestaurantCommand;
         public ICommand NavigateToSelectedRestaurantCommand
         {
             get { return _navigateToSelectedRestaurantCommand; }
