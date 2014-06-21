@@ -52,10 +52,10 @@ namespace Delivery.Core.DTO
         public object Description { get; set; }
 
         [JsonProperty("price")]
-        public object Price { get; set; }
+        public double Price { get; set; }
 
         [JsonProperty("max_price")]
-        public object MaxPrice { get; set; }
+        public double MaxPrice { get; set; }
 
         [JsonProperty("type")]
         public string Type { get; set; }
@@ -105,10 +105,10 @@ namespace Delivery.Core.DTO
         public string Description { get; set; }
 
         [JsonProperty("price")]
-        public int Price { get; set; }
+        public double Price { get; set; }
 
         [JsonProperty("max_price")]
-        public int MaxPrice { get; set; }
+        public double MaxPrice { get; set; }
 
         [JsonProperty("type")]
         public string Type { get; set; }

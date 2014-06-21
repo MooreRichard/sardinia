@@ -34,8 +34,8 @@ namespace Delivery.WindowsStore.ViewModels
             }
         }
 
-        private Menu _merchantMenu;
-        public Menu MerchantMenu
+        private Menu[] _merchantMenu;
+        public Menu[] MerchantMenu
         {
             get { return _merchantMenu; }
             set { SetProperty(ref _merchantMenu, value); }
@@ -64,7 +64,7 @@ namespace Delivery.WindowsStore.ViewModels
                         var result = await _dataService.GetMerchantMenu(merchantId.Id);
                         if (result == null)
                             return;
-                        MerchantMenu = result.Menu[0];
+                        MerchantMenu = result.Menu;
                         
                         System.Diagnostics.Debug.WriteLine(result.Menu[0].Name);
                     }));

@@ -54,10 +54,10 @@
         </Grid>
 
         <!---Menu Content -->
-        <GridView Grid.Row="1" ItemsSource="{Binding MerchantMenu.Children}">
+        <GridView Grid.Row="1" ItemsSource="{Binding MerchantMenu}">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <common:MerchantMenuSectionControl MerchantMenuSectionTitle="{Binding Name}" MerchantMenuSectionItems="{Binding Children}"/>
+                    <common:MerchantMenuControl MerchantMenuTitle="{Binding Name}" MerchantMenuItems="{Binding Children}"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>

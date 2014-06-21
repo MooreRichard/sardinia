@@ -139,7 +139,7 @@ namespace Delivery.Core.DTO
         public string Name { get; set; }
 
         [JsonProperty("price")]
-        public int Price { get; set; }
+        public double Price { get; set; }
 
         [JsonProperty("quantity")]
         public int Quantity { get; set; }
