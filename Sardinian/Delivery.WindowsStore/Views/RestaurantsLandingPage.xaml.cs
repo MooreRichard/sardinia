@@ -27,6 +27,8 @@ namespace Delivery.WindowsStore.Views
     /// </summary>
     public sealed partial class RestaurantsLandingPage : VisualStateAwarePage
     {
+
+        public RestaurantsLandingPageViewModel ViewModel { get { return DataContext as RestaurantsLandingPageViewModel; } }
      
         public RestaurantsLandingPage()
         {
@@ -44,8 +46,7 @@ namespace Delivery.WindowsStore.Views
 
         private void gvMerchants_ItemClick(object sender, ItemClickEventArgs e)
         {
-            (DataContext as RestaurantsLandingPageViewModel)._sessionStateService.SessionState["CurrentMerchant"] = e.ClickedItem as Merchant;
-            (DataContext as RestaurantsLandingPageViewModel).NavigateToSelectedRestaurantCommand.Execute(null);
+            ViewModel.NavigateToSelectedRestaurantCommand.Execute(e.ClickedItem);
         }
     }
 }

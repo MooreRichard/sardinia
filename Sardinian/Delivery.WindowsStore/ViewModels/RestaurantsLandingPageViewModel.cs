@@ -74,8 +74,9 @@ namespace Delivery.WindowsStore.ViewModels
         {
             get
             {
-                return _navigateToSelectedRestaurantCommand ?? (_navigateToSelectedRestaurantCommand = new RelayCommand(async delegate ()
+                return _navigateToSelectedRestaurantCommand ?? (_navigateToSelectedRestaurantCommand = new DelegateCommand<Merchant>(async delegate (Merchant currentMerchant)
                     {
+                        _sessionStateService.SessionState["CurrentMerchant"] = currentMerchant;
                         _navigationService.Navigate("RestaurantLanding", _selectedMerchant);
                        
                     }));

@@ -24,18 +24,26 @@ namespace Delivery.WindowsStore.ViewModels
         #endregion
 
         #region Databinding Properties
-        private ObservableCollection<Merchant> _merchants;
-        public ObservableCollection<Merchant> Merchants
+        private Merchant _currentMerchant;
+        public Merchant CurrentMerchant
         {
-            get { return _merchants; }
+            get { return _currentMerchant; }
+            set { SetProperty(ref _currentMerchant,  value); }
+        }
+
+        private Menu _selectedSubCategory;
+
+        public Menu SelectedSubCategory
+        {
+            get { return _selectedSubCategory; }
             set
             {
-                SetProperty(ref _merchants, value);
+                SetProperty(ref _selectedSubCategory, value);
             }
         }
 
-        private Menu[] _merchantMenu;
-        public Menu[] MerchantMenu
+        private ObservableCollection<Menu> _merchantMenu;
+        public ObservableCollection<Menu> MerchantMenu
         {
             get { return _merchantMenu; }
             set { SetProperty(ref _merchantMenu, value); }
@@ -60,19 +68,18 @@ namespace Delivery.WindowsStore.ViewModels
                     async delegate
                     {
                         System.Diagnostics.Debug.WriteLine("Restaurant Landing Page View Model Initializing..");
-                        Merchant merchantId = _sessionStateService.SessionState["CurrentMerchant"] as Merchant;
-                        var result = await _dataService.GetMerchantMenu(merchantId.Id);
+                        CurrentMerchant = _sessionStateService.SessionState["CurrentMerchant"] as Merchant;
+                        var result = await _dataService.GetMerchantMenu(CurrentMerchant.Id);
                         if (result == null)
                             return;
                         MerchantMenu = result.Menu;
-                        
+                        SelectedSubCategory = MerchantMenu[0];
                         System.Diagnostics.Debug.WriteLine(result.Menu[0].Name);
                     }));
             }
         }
 
         private ICommand _navigateBackCommand;
-
         public ICommand NavigateBackCommand
         {
             get

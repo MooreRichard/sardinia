@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -203,6 +205,22 @@ namespace Delivery.Core.DTO
         [JsonProperty("max_price")]
         public double MaxPrice { get; set; }
 
+        public string FormattedPrice
+        {
+            get
+            {
+                return MaxPrice.ToString("C", CultureInfo.CurrentCulture);
+            }
+        }
+
+        public string FormattedNameWithPrice
+        {
+            get
+            {
+                return String.Format("{0}   {1}", Name, FormattedPrice);
+            }
+        }
+
         [JsonProperty("increment")]
         public int Increment { get; set; }
 
@@ -251,13 +269,13 @@ namespace Delivery.Core.DTO
     {
 
         [JsonProperty("schedule")]
-        public Schedule[] Schedule { get; set; }
+        public ObservableCollection<Schedule> Schedule { get; set; }
 
         [JsonProperty("warnings")]
-        public Warning[] Warnings { get; set; }
+        public ObservableCollection<Warning> Warnings { get; set; }
 
         [JsonProperty("menu")]
-        public Menu[] Menu { get; set; }
+        public ObservableCollection<Menu> Menu { get; set; }
     }
 
 }

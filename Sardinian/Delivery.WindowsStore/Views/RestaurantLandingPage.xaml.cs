@@ -25,6 +25,8 @@ namespace Delivery.WindowsStore.Views
     /// </summary>
     public sealed partial class RestaurantLandingPage : VisualStateAwarePage
     {
+        public RestaurantLandingPageViewModel ViewModel { get { return DataContext as RestaurantLandingPageViewModel; } }
+        
         public RestaurantLandingPage()
         {
             this.InitializeComponent();
@@ -33,7 +35,7 @@ namespace Delivery.WindowsStore.Views
 
         void RestaurantLandingPage_Loaded(object sender, RoutedEventArgs e)
         {
-            (DataContext as RestaurantLandingPageViewModel).InitializeViewModelCommand.Execute(null);
+            ViewModel.InitializeViewModelCommand.Execute(null);
         }
     }
 }

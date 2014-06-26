@@ -56,9 +56,14 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Restaurants" FontSize="36"/>
             <GridView x:Name="gvMerchants" SelectionMode="Single" SelectedItem="{Binding SelectedMerchant}" ItemsSource="{Binding Merchants}" Grid.Row="1" IsItemClickEnabled="True" ItemClick="gvMerchants_ItemClick">
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VariableSizedWrapGrid ItemHeight="200" ItemWidth="300"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
                 <GridView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Summary.Name}" FontSize="16" TextWrapping="NoWrap" Width="240" FontFamily="Global User Interface"/>
+                        <TextBlock Text="{Binding Summary.Name}" FontSize="20" TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Kalinga"/>
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
