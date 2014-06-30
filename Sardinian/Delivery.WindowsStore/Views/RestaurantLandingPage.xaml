@@ -68,7 +68,7 @@
         </Grid>
         
         <!---Menu Content -->
-        <GridView Grid.Row="2" ItemsSource="{Binding SelectedSubCategory.Children}">
+        <GridView Grid.Row="2" ItemsSource="{Binding SelectedSubCategory.Children}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
             <ItemsPanelTemplate>
                 <VariableSizedWrapGrid ItemHeight="500" ItemWidth="450"/>
             </ItemsPanelTemplate>

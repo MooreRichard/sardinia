@@ -64,7 +64,7 @@ namespace Delivery.WindowsStore.ViewModels
                     async delegate
                     {
                         await _dataService.GenerateGuestToken();
-                        Merchants = await _dataService.GetMerchants("400 East 11th St New York NY 10009");
+                        Merchants = await _dataService.GetMerchants("1095 Avenue Of The Americas New York NY 10036");
                     }));
             }
         }

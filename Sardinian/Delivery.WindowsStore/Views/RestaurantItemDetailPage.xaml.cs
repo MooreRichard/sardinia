@@ -1,4 +1,5 @@
-﻿using Delivery.WindowsStore.Common;
+﻿using Delivery.Core.DTO;
+using Delivery.WindowsStore.Common;
 using Delivery.WindowsStore.ViewModels;
 using Microsoft.Practices.Prism.StoreApps;
 using System;
@@ -23,24 +24,23 @@ namespace Delivery.WindowsStore.Views
     /// <summary>
     /// A basic page that provides characteristics common to most applications.
     /// </summary>
-    public sealed partial class RestaurantLandingPage : VisualStateAwarePage
+    public sealed partial class RestaurantItemDetailPage : VisualStateAwarePage
     {
-        public RestaurantLandingPageViewModel ViewModel { get { return DataContext as RestaurantLandingPageViewModel; } }
-        
-        public RestaurantLandingPage()
+        private RestaurantItemDetailPageViewModel ViewModel
+        {
+            get { return DataContext as RestaurantItemDetailPageViewModel; }
+        }
+        public RestaurantItemDetailPage()
         {
             this.InitializeComponent();
-            this.Loaded += RestaurantLandingPage_Loaded;
+            this.Loaded += RestaurantItemDetailPage_Loaded;
         }
 
-        void RestaurantLandingPage_Loaded(object sender, RoutedEventArgs e)
+        void RestaurantItemDetailPage_Loaded(object sender, RoutedEventArgs e)
         {
+            
             ViewModel.InitializeViewModelCommand.Execute(null);
         }
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ViewModel.NavigateToSelectedRestaurantCommand.Execute(e.ClickedItem);
-        }
     }
 }

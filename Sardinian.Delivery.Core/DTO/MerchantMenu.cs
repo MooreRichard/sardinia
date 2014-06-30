@@ -209,6 +209,8 @@ namespace Delivery.Core.DTO
         {
             get
             {
+                if (MaxPrice == 0)
+                    return "";
                 return MaxPrice.ToString("C", CultureInfo.CurrentCulture);
             }
         }

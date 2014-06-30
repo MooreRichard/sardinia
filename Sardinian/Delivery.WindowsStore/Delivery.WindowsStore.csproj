@@ -112,8 +112,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\RestaurantItemDetailPageViewModel.cs" />
     <Compile Include="ViewModels\RestaurantLandingPageViewModel.cs" />
     <Compile Include="ViewModels\RestaurantsLandingPageViewModel.cs" />
+    <Compile Include="Views\RestaurantItemDetailPage.xaml.cs">
+      <DependentUpon>RestaurantItemDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RestaurantLandingPage.xaml.cs">
       <DependentUpon>RestaurantLandingPage.xaml</DependentUpon>
     </Compile>
@@ -151,6 +155,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\RestaurantItemDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RestaurantLandingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

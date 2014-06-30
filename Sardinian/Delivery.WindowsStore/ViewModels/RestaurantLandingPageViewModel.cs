@@ -94,8 +94,14 @@ namespace Delivery.WindowsStore.ViewModels
         private ICommand _navigateToSelectedRestaurantCommand;
         public ICommand NavigateToSelectedRestaurantCommand
         {
-            get { return _navigateToSelectedRestaurantCommand; }
-            set { _navigateToSelectedRestaurantCommand = value; }
+            get
+            {
+                return _navigateToSelectedRestaurantCommand ?? (_navigateToSelectedRestaurantCommand = new DelegateCommand<Child>(async delegate(Child selectedItem)
+                {
+                    _sessionStateService.SessionState["SelectedItem"] = selectedItem;
+                    _navigationService.Navigate("RestaurantItemDetail", null);
+                }));
+            }
         }
 
         #endregion
