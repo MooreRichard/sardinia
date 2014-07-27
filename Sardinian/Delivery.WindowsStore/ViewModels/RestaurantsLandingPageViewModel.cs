@@ -44,6 +44,29 @@ namespace Delivery.WindowsStore.ViewModels
             }
         }
 
+        private string _pageTitle;
+        public string PageTitle
+        {
+            get
+            {
+                return _pageTitle;
+            }
+            set
+            {
+                SetProperty(ref _pageTitle,  value);
+            }
+        }
+
+        private string _address;
+        public string Address
+        {
+            get { return _address; }
+            set
+            {
+                SetProperty(ref _address, value);
+            }
+        }
+
         #endregion
 
         public RestaurantsLandingPageViewModel(IDeliveryDataService dataService, INavigationService navigationService, ISessionStateService sessionStateService)
@@ -64,7 +87,9 @@ namespace Delivery.WindowsStore.ViewModels
                     async delegate
                     {
                         await _dataService.GenerateGuestToken();
-                        Merchants = await _dataService.GetMerchants("1095 Avenue Of The Americas New York NY 10036");
+                        Address = "400 E 11th St New York NY 10009";
+                        Merchants = await _dataService.GetMerchants(Address);
+                        //PageTitle = (Merchants.Count > 1) ? String.Format("{0} Restaurants Near {1} ", Merchants.Count, Address) : "Sorry, There Were No Restaurants Found :(";
                     }));
             }
         }
@@ -79,6 +104,20 @@ namespace Delivery.WindowsStore.ViewModels
                         _sessionStateService.SessionState["CurrentMerchant"] = currentMerchant;
                         _navigationService.Navigate("RestaurantLanding", _selectedMerchant);
                        
+                    }));
+            }
+        }
+
+        private ICommand _merchantSearchCommand;
+        public ICommand MerchantSearchCommand
+        {
+            get
+            {
+                return _merchantSearchCommand ?? (_merchantSearchCommand = new DelegateCommand<string>(async delegate(string address)
+                    {
+                        Merchants = await _dataService.GetMerchants(Address);
+                        //PageTitle = (Merchants.Count > 1) ? String.Format("{0} Restaurants Near {1} ", Merchants.Count, Address) : "Sorry, There Were No Restaurants Found :(";
+                        Address = address;
                     }));
             }
         }

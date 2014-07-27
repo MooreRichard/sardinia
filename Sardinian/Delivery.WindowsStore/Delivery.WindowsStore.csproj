@@ -112,6 +112,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\ShoppingCart.xaml.cs">
+      <DependentUpon>ShoppingCart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ShoppingCartItem.xaml.cs">
+      <DependentUpon>ShoppingCartItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\RestaurantItemDetailPageViewModel.cs" />
     <Compile Include="ViewModels\RestaurantLandingPageViewModel.cs" />
     <Compile Include="ViewModels\RestaurantsLandingPageViewModel.cs" />
@@ -155,6 +161,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Common\ShoppingCart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\ShoppingCartItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RestaurantItemDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

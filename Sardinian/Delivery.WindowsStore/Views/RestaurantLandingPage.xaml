@@ -11,16 +11,9 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-         <!--TODO: Delete this line if the key AppName is declared in App.xaml--> 
-        <x:String x:Key="AppName">My Application</x:String>
-        <!--<DataTemplate x:Name="MenuCategoryItemTemplate">
-            <TextBlock Text="{Binding Name}" />
-        </DataTemplate>
-        <DataTemplate x:Name="MenuItemTemplate">
-            <TextBlock Text="{Binding Name}" />
-        </DataTemplate>-->
+        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
     </Page.Resources>
-
+    
     <!--
         This grid acts as a root panel for the page that defines two rows:
         * Row 0 contains the back button and page title
@@ -37,6 +30,11 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+
 
         <!-- Back button and page title -->
         <Grid>
@@ -66,7 +64,7 @@
             <TextBlock Grid.Column="0" Text="Filter By: " FontSize="24"/>
             <ComboBox ItemsSource="{Binding MerchantMenu}" Grid.Column="1" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSubCategory, Mode=TwoWay}"/>
         </Grid>
-        
+
         <!---Menu Content -->
         <GridView Grid.Row="2" ItemsSource="{Binding SelectedSubCategory.Children}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
             <ItemsPanelTemplate>
@@ -74,18 +72,20 @@
             </ItemsPanelTemplate>
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    
+
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="80"/>
                             <RowDefinition Height="80" />
                         </Grid.RowDefinitions>
-
                         <TextBlock Grid.Row="0" Text="{Binding FormattedNameWithPrice}" FontSize="20" TextWrapping="Wrap" Width="440" HorizontalAlignment="Left"/>
                         <TextBlock Grid.Row="1" Text="{Binding Description}" FontSize="16" TextWrapping="Wrap" Width="440" Margin="0,-33,0,0" HorizontalAlignment="Left"/>
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
+
+        <common:ShoppingCartControl x:Name="ShoppingCart" Grid.Row="1" Grid.Column="2" Grid.RowSpan="3"/>
     </Grid>
+
 </prism:VisualStateAwarePage>

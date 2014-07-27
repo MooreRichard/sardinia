@@ -94,8 +94,16 @@ namespace Delivery.Core.DTO
         public Child5[] Children { get; set; }
     }
 
-    public class Child3
+    public class Options
     {
+
+        public string FormattedNameWithPrice
+        {
+            get
+            {
+                return String.Format("{0}...{1}", Name, Price);
+            }
+        }
 
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -116,10 +124,10 @@ namespace Delivery.Core.DTO
         public string Type { get; set; }
 
         [JsonProperty("children")]
-        public object[] Children { get; set; }
+        public ObservableCollection<OptionItem> Children { get; set; }
     }
 
-    public class Child2
+    public class CustomizationGroup
     {
 
         [JsonProperty("id")]
@@ -144,7 +152,7 @@ namespace Delivery.Core.DTO
         public string Type { get; set; }
 
         [JsonProperty("children")]
-        public Child3[] Children { get; set; }
+        public ObservableCollection<Options> Options { get; set; }
     }
 
     public class MenuItemRequestObject
@@ -178,7 +186,7 @@ namespace Delivery.Core.DTO
         public string Type { get; set; }
 
         [JsonProperty("children")]
-        public Child2[] Children { get; set; }
+        public ObservableCollection<CustomizationGroup> Children { get; set; }
     }
 
     public class Child
@@ -230,7 +238,7 @@ namespace Delivery.Core.DTO
         public string Type { get; set; }
 
         [JsonProperty("children")]
-        public Child2[] Children { get; set; }
+        public ObservableCollection<CustomizationGroup> Customizations { get; set; }
     }
 
     
@@ -278,6 +286,31 @@ namespace Delivery.Core.DTO
 
         [JsonProperty("menu")]
         public ObservableCollection<Menu> Menu { get; set; }
+    }
+
+    public class OptionItem
+    {
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("price")]
+        public double Price { get; set; }
+
+        [JsonProperty("max_price")]
+        public double MaxPrice { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("children")]
+        public ObservableCollection<OptionItem> Options { get; set; }
     }
 
 }
